@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HIGNICE OFFICIAL HACK - Siddik Extreme Edition</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;900&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Rubik', sans-serif;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #05070f;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        #game-iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            z-index: 1;
+        }
+
+        /* ফ্লোটিং আইকন */
+        #floating-icon-btn {
+            position: fixed;
+            top: 40px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #38bdf8;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.8);
+            cursor: move;
+            z-index: 9999;
+            overflow: hidden;
+            touch-action: none;
+            background: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #floating-icon-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            pointer-events: none;
+        }
+
+        /* পাসওয়ার্ড পপআপ উইন্ডো */
+        #auth-overlay {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 260px;
+            background: rgba(10, 15, 30, 0.95);
+            border: 2px solid #38bdf8;
+            border-radius: 14px;
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.5);
+            padding: 15px;
+            display: none;
+            z-index: 10000;
+            text-align: center;
+        }
+
+        .auth-title {
+            font-size: 11px;
+            font-weight: 900;
+            color: #facc15;
+            margin-bottom: 8px;
+        }
+
+        .auth-input {
+            width: 100%;
+            padding: 6px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #38bdf8;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 10px;
+            text-align: center;
+            margin-bottom: 6px;
+            outline: none;
+            font-weight: 600;
+        }
+
+        .remember-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            font-size: 8px;
+            color: #cbd5e1;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 6px;
+            background: linear-gradient(135deg, #38bdf8, #0284c7);
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 9px;
+            font-weight: 900;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        #error-msg {
+            color: #ff3366;
+            font-size: 7px;
+            margin-top: 4px;
+            display: none;
+            font-weight: 700;
+        }
+
+        /* মূল হ্যাক পপআপ বক্স (রিসাইজ ও ড্র্যাগঅ্যাবল) */
+        .overlay-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 370px;
+            height: 235px;
+            min-width: 300px;
+            min-height: 200px;
+            resize: both;
+            overflow: hidden;
+            background: url('https://imagepaste.org/i/kr9ef6uj.png') no-repeat center center;
+            background-size: cover;
+            border-radius: 16px;
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.6);
+            padding: 10px;
+            display: none;
+            z-index: 9999;
+            touch-action: none;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 6px;
+            right: 10px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            font-size: 9px;
+            cursor: pointer;
+            z-index: 25;
+        }
+
+        /* সম্পূর্ণ ব্যাকগ্রাউন্ডে ভিডিও প্লে হবে */
+        .popup-bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            opacity: 0.85;
+        }
+
+        /* পিএনজি ইমেজ ফ্রেম ওভারলে */
+        .popup-overlay-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://imagepaste.org/i/kr9ef6uj.png') no-repeat center center;
+            background-size: cover;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* চারকোনা বক্সের ভেতরের কন্টেইনার (স্ক্রিনশট অনুযায়ী পারফেক্ট পজিশন)[span_3](start_span)[span_3](end_span) */
+        .signal-inner-container {
+            position: absolute;
+            top: 105px;
+            right: 38px;
+            width: 145px;
+            height: 75px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            z-index: 5;
+            gap: 2px;
+        }
+
+        .period-row-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .period-text {
+            font-size: 8px;
+            font-weight: 900;
+            color: #38bdf8;
+            letter-spacing: 0.2px;
+            text-shadow: 0 0 4px rgba(56, 189, 248, 0.8);
+            line-height: 1.1;
+        }
+
+        /* পিরিয়ড নাম্বারের পাশের ছোট রেড/গ্রিন ডট ইন্ডিকেটর[span_4](start_span)[span_4](end_span) */
+        .period-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* জলজল করা রেইনবো গ্রেডিয়েন্ট অ্যানিমেশন */
+        @keyframes luxuryGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .big-small-text {
+            font-size: 17px;
+            font-weight: 900;
+            letter-spacing: 1.2px;
+            line-height: 1.1;
+            background: linear-gradient(270deg, #00ffcc, #ff007f, #ffff00, #00ffff, #ff3333, #22c55e);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: luxuryGlow 4s ease infinite;
+            filter: drop-shadow(0 0 8px rgba(0, 255, 204, 0.8));
+        }
+
+        /* ছোট ও সুন্দর অফিশিয়াল কালারড নম্বর প্রেডিকশন রো */
+        .number-prediction-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 1px;
+        }
+
+        .num-badge {
+            font-size: 9px;
+            font-weight: 900;
+            background: rgba(0, 0, 0, 0.85);
+            border-radius: 4px;
+            padding: 1px 5px;
+            letter-spacing: 0.4px;
+            line-height: 1.1;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* নিচের লাইভ ও টাইমার */
+        .bottom-info-bar {
+            position: absolute;
+            bottom: 35px;
+            left: 18px;
+            right: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 8.5px;
+            font-weight: 700;
+            color: #ffffff;
+            z-index: 5;
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            color: #22c55e;
+            font-size: 8px;
+        }
+
+        .live-dot {
+            width: 5px;
+            height: 5px;
+            background: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 0 6px #22c55e;
+        }
+
+        .timer-display {
+            color: #facc15;
+            font-weight: 900;
+        }
+
+        /* স্কোর ও মোটা লোডিং ইন্টারফেস বার */
+        .score-progress-section {
+            position: absolute;
+            bottom: 20px;
+            left: 18px;
+            right: 18px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 5;
+        }
+
+        .score-label {
+            font-size: 8px;
+            font-weight: 900;
+            color: #facc15;
+        }
+
+        .inline-loading-bar {
+            flex: 1;
+            height: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #38bdf8;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: inset 0 0 5px rgba(56, 189, 248, 0.4);
+        }
+
+        .inline-loading-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #00f0ff, #22c55e);
+            box-shadow: 0 0 10px #00f0ff;
+            transition: width 0.3s linear;
+        }
+
+        /* টেলিগ্রাম লোগোসহ সাপোর্ট এডমিন বাটন */
+        .telegram-badge-link {
+            position: absolute;
+            bottom: 3px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            background: rgba(0, 136, 204, 0.4);
+            border: 1.5px solid #0088cc;
+            padding: 3px 14px;
+            border-radius: 14px;
+            box-shadow: 0 0 12px rgba(0, 136, 204, 0.8);
+            transition: all 0.3s ease;
+            z-index: 20;
+        }
+
+        .telegram-badge-link:hover {
+            background: rgba(0, 136, 204, 0.7);
+            box-shadow: 0 0 16px rgba(0, 136, 204, 1);
+        }
+
+        .telegram-badge-link svg {
+            width: 13px;
+            height: 13px;
+            fill: #38bdf8;
+        }
+
+        .telegram-badge-link span {
+            font-size: 8.5px;
+            color: #ffffff;
+            font-weight: 900;
+            letter-spacing: 0.8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- গেম রেফারেল লিংক iframe -->
+    <iframe id="game-iframe" src="https://hgnice.bet/#/register?invitationCode=68758106622" loading="lazy"></iframe>
+
+    <!-- ফ্লোটিং আইকন -->
+    <div id="floating-icon-btn" onclick="handleIconClick()">
+        <img src="https://imagepaste.org/i/wcjrvxb4.png" alt="Siddik Icon">
+    </div>
+
+    <!-- পাসওয়ার্ড পপআপ -->
+    <div id="auth-overlay">
+        <div class="auth-title">🔐 VIP ACCESS REQUIRED</div>
+        <input type="password" id="pass-input" class="auth-input" placeholder="Enter Password">
+        <label class="remember-row">
+            <input type="checkbox" id="remember-pass"> Remember Password
+        </label>
+        <button class="auth-btn" onclick="checkPassword()">Submit</button>
+        <div id="error-msg">Wrong Password!</div>
+    </div>
+
+    <!-- মূল হ্যাক পপআপ উইন্ডো -->
+    <div class="overlay-box" id="main-content">
+        
+        <!-- সম্পূর্ণ ব্যাকগ্রাউন্ডে ভিডিও প্লে হবে -->
+        <video class="popup-bg-video" autoplay muted loop playsinline>
+            <source src="https://cdn.imageurlgenerator.com/uploads/59c06f5b-cd64-4347-b909-ba84a59b62f3.mp4" type="video/mp4">
+        </video>
+
+        <!-- পিএনজি ইমেজ ফ্রেম ওভারলে -->
+        <div class="popup-overlay-img"></div>
+
+        <button class="close-btn" onclick="hidePopup()">×</button>
+
+        <div class="signal-inner-container">
+            <div class="period-row-wrapper">
+                <div class="period-text" id="period">P Loading...</div>
+                <span class="period-dot" id="p-dot" style="background: #22c55e; box-shadow: 0 0 4px #22c55e;"></span>
+            </div>
+            <div class="big-small-text" id="res-size">WAITING...</div>
+            <div class="number-prediction-row" id="num-row" style="display: none;">
+                <span class="num-badge" id="num-1">--</span>
+                <span class="num-badge" id="num-2">--</span>
+            </div>
+        </div>
+
+        <!-- নিচের লাইভ ও টাইমার -->
+        <div class="bottom-info-bar">
+            <div class="live-indicator">
+                <div class="live-dot"></div>
+                <span>LIVE</span>
+            </div>
+            <div class="timer-display" id="timer-text">00:30</div>
+        </div>
+
+        <!-- স্কোর ও মোটা লোডিং প্রোগ্রেস বার -->
+        <div class="score-progress-section">
+            <span class="score-label" id="score-text">SCORE 10%</span>
+            <div class="inline-loading-bar">
+                <div class="inline-loading-fill" id="inline-progress"></div>
+            </div>
+        </div>
+
+        <!-- টেলিগ্রাম লোগোসহ সাপোর্ট এডমিন বাটন -->
+        <a href="https://t.me/BDT5847" target="_blank" class="telegram-badge-link">
+            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.03-1.99 1.27-5.62 3.72-.53.36-1.01.54-1.44.53-.47-.02-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.25.38-.51 1.05-.78 4.11-1.79 6.85-2.97 8.22-3.54 3.91-1.63 4.72-1.92 5.25-1.93.12 0 .39.03.56.17.15.12.19.28.21.4-.01.07.01.2 0 .33z"/></svg>
+            <span>SUPPORT ADMIN</span>
+        </a>
+    </div>
+
+    <script>
+        let isUnlocked = localStorage.getItem("siddik_hack_unlocked") === "true";
+        const totalDuration = 30;
+
+        function handleIconClick() {
+            if (isUnlocked) {
+                document.getElementById('main-content').style.display = 'block';
+                document.getElementById('floating-icon-btn').style.display = 'none';
+                startPeriodGenerator();
+            } else {
+                document.getElementById('auth-overlay').style.display = 'block';
+            }
+        }
+
+        function checkPassword() {
+            const pass = document.getElementById('pass-input').value;
+            const rememberMe = document.getElementById('remember-pass').checked;
+
+            if (pass === "SIDDIK58") {
+                isUnlocked = true;
+                if (rememberMe) {
+                    localStorage.setItem("siddik_hack_unlocked", "true");
+                }
+                document.getElementById('auth-overlay').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                document.getElementById('floating-icon-btn').style.display = 'none';
+                startPeriodGenerator();
+            } else {
+                document.getElementById('error-msg').style.display = 'block';
+                document.getElementById('pass-input').value = "";
+            }
+        }
+
+        function hidePopup() {
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('floating-icon-btn').style.display = 'flex';
+        }
+
+        function getNumBadgeStyle(num) {
+            let colorHex = "";
+            let shadowHex = "";
+
+            if (num === 0 || num === 5) {
+                colorHex = "#c084fc";
+                shadowHex = "rgba(192, 132, 252, 0.8)";
+            } else if (num === 1 || num === 3 || num === 7 || num === 9) {
+                colorHex = "#22c55e";
+                shadowHex = "rgba(34, 197, 94, 0.8)";
+            } else {
+                colorHex = "#ef4444";
+                shadowHex = "rgba(239, 68, 68, 0.8)";
+            }
+
+            return {
+                text: `${num}`,
+                style: `color: ${colorHex}; border: 1px solid ${colorHex}; box-shadow: 0 0 5px ${shadowHex};`
+            };
+        }
+
+        function startPeriodGenerator() {
+            function update() {
+                if (!isUnlocked) return;
+
+                const now = new Date();
+                const totalSecs = now.getUTCHours() * 3600 + now.getUTCMinutes() * 60 + now.getUTCSeconds();
+                let periodIndex = Math.floor(totalSecs / totalDuration) + 1;
+                let dateStr = `${now.getUTCFullYear()}${String(now.getUTCMonth() + 1).padStart(2, '0')}${String(now.getUTCDate()).padStart(2, '0')}`;
+                
+                let fullPeriodNumber = `P ${dateStr}30${String(10000 + periodIndex).slice(-4)}`;
+                let timeLeft = totalDuration - (totalSecs % totalDuration);
+
+                document.getElementById('period').innerText = fullPeriodNumber;
+                document.getElementById('timer-text').innerText = `00:${timeLeft < 10 ? '0' : ''}${timeLeft}`;
+
+                let sizeEl = document.getElementById('res-size');
+                let numRow = document.getElementById('num-row');
+                let num1El = document.getElementById('num-1');
+                let num2El = document.getElementById('num-2');
+                let pDot = document.getElementById('p-dot');
+                let inlineProgress = document.getElementById('inline-progress');
+                let scoreLabel = document.getElementById('score-text');
+
+                if (timeLeft >= 28) {
+                    let elapsedSteps = 30 - timeLeft + 1;
+                    let loadingProgress = (elapsedSteps / 3) * 100;
+                    inlineProgress.style.width = loadingProgress + "%";
+                    
+                    let dummyScore = elapsedSteps * 33;
+                    scoreLabel.innerText = `SCORE ${dummyScore}%`;
+
+                    sizeEl.innerText = "LOADING...";
+                    sizeEl.style.fontSize = "11px";
+                    sizeEl.style.background = "none";
+                    sizeEl.style.webkitTextFillColor = "#38bdf8";
+                    sizeEl.style.filter = "none";
+                    numRow.style.display = "none";
+                    pDot.style.background = "#38bdf8";
+                    pDot.style.boxShadow = "0 0 4px #38bdf8";
+                } else {
+                    inlineProgress.style.width = "100%";
+                    scoreLabel.innerText = `SCORE 98%`;
+                    sizeEl.style.fontSize = "17px";
+
+                    let seed = parseInt(fullPeriodNumber.replace('P ', ''));
+                    let x = Math.sin(seed * 73.156) * 10000;
+                    let randomFactor = Math.abs(x - Math.floor(x));
+                    let isBig = (seed % 2 === 0);
+                    if (randomFactor > 0.45) isBig = !isBig;
+
+                    sizeEl.innerText = isBig ? "BIG" : "SMALL";
+                    sizeEl.style.background = "linear-gradient(270deg, #00ffcc, #ff007f, #ffff00, #00ffff, #ff3333, #22c55e)";
+                    sizeEl.style.backgroundSize = "400% 400%";
+                    sizeEl.style.webkitBackgroundClip = "text";
+                    sizeEl.style.webkitTextFillColor = "transparent";
+                    sizeEl.style.filter = "drop-shadow(0 0 8px rgba(0, 255, 204, 0.8))";
+
+                    // সিগন্যাল অনুযায়ী ছোট ডটের কালার (Big হলে Red, Small হলে Green)
+                    if (isBig) {
+                        pDot.style.background = "#ef4444";
+                        pDot.style.boxShadow = "0 0 4px #ef4444";
+                    } else {
+                        pDot.style.background = "#22c55e";
+                        pDot.style.boxShadow = "0 0 4px #22c55e";
+                    }
+
+                    let n1, n2;
+                    if (isBig) {
+                        n1 = 5 + (seed % 3);
+                        n2 = 5 + ((seed + 2) % 4);
+                        if (n1 === n2) n2 = 5 + ((n1 + 1) % 5);
+                    } else {
+                        n1 = seed % 3;
+                        n2 = (seed + 2) % 5;
+                        if (n1 === n2) n2 = (n1 + 2) % 5;
+                    }
+
+                    let info1 = getNumBadgeStyle(n1);
+                    let info2 = getNumBadgeStyle(n2);
+
+                    num1El.innerText = info1.text;
+                    num1El.style.cssText = info1.style;
+
+                    num2El.innerText = info2.text;
+                    num2El.style.cssText = info2.style;
+
+                    numRow.style.display = "flex";
+                }
+
+                setTimeout(update, 1000);
+            }
+            update();
+        }
+
+        makeDraggable(document.getElementById("floating-icon-btn"));
+        makeDraggable(document.getElementById("main-content"));
+
+        function makeDraggable(elmnt) {
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            elmnt.onmousedown = dragMouseDown;
+            elmnt.ontouchstart = dragMouseDown;
+
+            function dragMouseDown(e) {
+                e = e || window.event;
+                let clientX = e.type === "touchstart" ? e.touches[0].clientX : e.clientX;
+                let clientY = e.type === "touchstart" ? e.touches[0].clientY : e.clientY;
+                pos3 = clientX;
+                pos4 = clientY;
+                document.onmouseup = closeDragElement;
+                document.ontouchend = closeDragElement;
+                document.onmousemove = elementDrag;
+                document.ontouchmove = elementDrag;
+            }
+
+            function elementDrag(e) {
+                e = e || window.event;
+                let clientX = e.type === "touchmove" ? e.touches[0].clientX : e.clientX;
+                let clientY = e.type === "touchmove" ? e.touches[0].clientY : e.clientY;
+                pos1 = pos3 - clientX;
+                pos2 = pos4 - clientY;
+                pos3 = clientX;
+                pos4 = clientY;
+                elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+                elmnt.style.transform = "none";
+            }
+
+            function closeDragElement() {
+                document.onmouseup = null;
+                document.ontouchend = null;
+                document.onmousemove = null;
+                document.ontouchmove = null;
+            }
+        }
+    </script>
+</body>
+                  </html>
