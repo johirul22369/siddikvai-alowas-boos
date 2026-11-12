@@ -21,7 +21,7 @@
             background: #000;
         }
 
-        /* ব্যাকগ্রাউন্ড গেম ফ্রেম */
+        /* ব্যাকগ্রাউন্ড গেম ফ্রেম (রেফারেল লিংক) */
         .game-frame {
             width: 100%;
             height: 100%;
@@ -69,10 +69,10 @@
             transform: translate(-50%, -50%);
             width: 90%;
             max-width: 380px;
-            background: linear-gradient(145deg, rgba(18, 10, 35, 0.95), rgba(8, 3, 18, 0.98));
+            background: linear-gradient(145deg, rgba(18, 10, 35, 0.96), rgba(8, 3, 18, 0.99));
             border: 2px solid #ffd700;
             border-radius: 22px;
-            box-shadow: 0 0 40px rgba(124, 58, 237, 0.7);
+            box-shadow: 0 0 45px rgba(124, 58, 237, 0.8);
             backdrop-filter: blur(15px);
             z-index: 10000;
             padding: 22px;
@@ -106,7 +106,7 @@
             cursor: pointer;
         }
 
-        /* পাসওয়ার্ড স্ক্রিন মডিফাইড */
+        /* পাসওয়ার্ড স্ক্রিন */
         .auth-screen {
             display: flex;
             flex-direction: column;
@@ -158,7 +158,7 @@
             transform: scale(0.97);
         }
 
-        /* প্রেডিকশন ড্যাশবোর্ড স্ক্রিন */
+        /* প্রেডিকশন ড্যাশবোর্ড স্ক্রিন (সেন্টার ফোকাসড) */
         .dashboard-screen {
             display: none;
             flex-direction: column;
@@ -172,38 +172,43 @@
             letter-spacing: 1px;
         }
 
-        /* প্লেন ও অ্যানিমেশন বক্স */
+        /* পপআপের একদম মাঝখানের প্রিমিয়াম প্রেডিকশন বক্স */
         .prediction-box {
             position: relative;
-            background: radial-gradient(circle, rgba(45, 11, 90, 0.8) 0%, rgba(5, 2, 15, 0.95) 100%);
-            border: 1px solid rgba(255, 215, 0, 0.4);
-            border-radius: 16px;
-            padding: 25px 15px;
+            background: radial-gradient(circle, rgba(55, 15, 110, 0.85) 0%, rgba(8, 3, 22, 0.98) 100%);
+            border: 2px solid rgba(255, 215, 0, 0.5);
+            border-radius: 18px;
+            padding: 30px 15px;
             overflow: hidden;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            box-shadow: inset 0 0 25px rgba(0,0,0,0.9), 0 0 20px rgba(124, 58, 237, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .plane-anim {
-            font-size: 28px;
+            font-size: 34px;
             display: inline-block;
-            margin-bottom: 5px;
         }
 
-        @keyframes fly {
-            0% { transform: translate(-20px, 10px) rotate(-10deg); }
-            50% { transform: translate(0px, -10px) rotate(5deg); }
-            100% { transform: translate(20px, 10px) rotate(-10deg); }
+        @keyframes flyCenter {
+            0% { transform: translate(-25px, 12px) rotate(-12deg); }
+            50% { transform: translate(0px, -12px) rotate(6deg); }
+            100% { transform: translate(25px, 12px) rotate(-12deg); }
         }
 
         .flying {
-            animation: fly 0.5s infinite ease-in-out;
+            animation: flyCenter 0.45s infinite ease-in-out;
         }
 
         .prediction-display {
-            font-size: 36px;
+            font-size: 42px;
             font-weight: 900;
             color: #ffd700;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+            text-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+            letter-spacing: 1px;
         }
     </style>
 </head>
@@ -232,7 +237,7 @@
             <p id="errorMsg" style="color: #ff4d4d; font-size: 12px; font-weight: 700; display: none;">❌ ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন।</p>
         </div>
 
-        <!-- এআই অটো-লুপ প্রেডিকশন ইন্টারফেস -->
+        <!-- এআই অটো-লুপ প্রেডিকশন ইন্টারফেস (মাঝখানে প্লেন ও গুণ সংখ্যা) -->
         <div class="dashboard-screen" id="dashScreen">
             <div class="status-text" id="statusText">AI SYSTEM CONNECTED</div>
             
@@ -316,7 +321,7 @@
                 statusText.innerText = "✈️ FLIGHT IN PROGRESS...";
                 planeIcon.classList.add('flying');
 
-                let targetVal = (Math.random() * (5.20 - 1.25) + 1.25).toFixed(2);
+                let targetVal = (Math.random() * (5.50 - 1.25) + 1.25).toFixed(2);
                 let currentVal = 1.00;
 
                 let countInterval = setInterval(() => {
