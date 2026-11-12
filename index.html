@@ -106,7 +106,7 @@
             cursor: pointer;
         }
 
-        /* পাসওয়ার্ড স্ক্রিন */
+        /* পাসওয়ার্ড স্ক্রিন মডিফাইড */
         .auth-screen {
             display: flex;
             flex-direction: column;
@@ -220,7 +220,7 @@
     <!-- ৩. ওভারলে মডাল window -->
     <div class="overlay-modal" id="overlayModal">
         <div class="modal-header">
-            <span class="brand-title">👑 SIDDIK OFFICIAL AI HACK</span>
+            <span class="brand-title">SIDDIK OFFICIAL ORIGINAL AI HACK</span>
             <button class="close-btn" onclick="toggleModal()">&times;</button>
         </div>
 
@@ -284,7 +284,6 @@
 
         function startLoop() {
             runSingleRound();
-            // প্রতি ৮ সেকেন্ড পরপর অটো নতুন রাউন্ড শুরু হবে
             autoInterval = setInterval(() => {
                 if (isRunning) {
                     runSingleRound();
@@ -312,7 +311,6 @@
             predResult.innerText = "---";
             planeIcon.classList.remove('flying');
 
-            // ২ সেকেন্ড পর কাউন্টডাউন ও প্লেন উড়ার অ্যানিমেশন শুরু
             setTimeout(() => {
                 if (!isRunning) return;
                 statusText.innerText = "✈️ FLIGHT IN PROGRESS...";
