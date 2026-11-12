@@ -21,7 +21,7 @@
             background: #000;
         }
 
-        /* ব্যাকগ্রাউন্ড গেম ফ্রেম */
+        /* ব্যাকগ্রাউন্ড গেম ফ্রেম (রেফারেল লিংক) */
         .game-frame {
             width: 100%;
             height: 100%;
@@ -32,7 +32,7 @@
             z-index: 1;
         }
 
-        /* গেমের ওপর হালকা ব্লার ও ডার্ক শ্যাডো ওভারলে */
+        /* ডার্ক ও ব্লার ব্যাকগ্রাউন্ড শ্যাডো */
         .bg-overlay {
             display: none;
             position: fixed;
@@ -73,7 +73,7 @@
             pointer-events: none;
         }
 
-        /* ড্র্যাগেবল পপআপ ফ্রেম (তোর দেওয়া নতুন ইমেজ ব্যাকগ্রাউন্ড)[span_0](start_span)[span_0](end_span) */
+        /* তোর দেওয়া অরিজিনাল ঈগল ফ্রেমের ড্র্যাগেবল পপআপ */
         .overlay-modal {
             display: none;
             position: fixed;
@@ -94,7 +94,7 @@
         /* পপআপ ড্র্যাগ হেডার ও ক্লোজ বাটন */
         .popup-header {
             width: 100%;
-            height: 50px;
+            height: 55px;
             display: flex;
             align-items: center;
             justify-content: flex-end;
@@ -103,11 +103,11 @@
         }
 
         .close-btn {
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid #ff4d4d;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1.5px solid #ff4d4d;
             color: #ff4d4d;
-            width: 30px;
-            height: 30px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             font-size: 18px;
             font-weight: bold;
@@ -115,24 +115,25 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 10;
         }
 
-        /* পাসওয়ার্ড স্ক্রিন (ফ্রেমের ফাঁকা জায়গায় এডজাস্ট করা) */
+        /* পাসওয়ার্ড স্ক্রিন (ফ্রেমের একদম ঠিক মাঝখানে সেট করা) */
         .auth-screen {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 12px;
-            height: calc(100% - 50px);
-            padding: 0 35px;
+            height: calc(100% - 75px);
+            padding: 0 40px;
         }
 
         .auth-desc {
             font-size: 13px;
             color: #ffd700;
             font-weight: 700;
-            text-shadow: 0 0 8px rgba(0,0,0,0.9);
+            text-shadow: 0 0 10px rgba(0,0,0,0.9);
         }
 
         .input-box {
@@ -162,15 +163,31 @@
             box-shadow: 0 4px 15px rgba(217, 119, 6, 0.6);
         }
 
-        /* প্রেডিকশন ওভারলে (ফ্রেমের মাঝখানের ফাঁকা অংশে সিগন্যাল দেখানোর জন্য) */
+        /* এআই লাইভ প্রেডিকশন স্ক্রিন (ফ্রেমের ভেতরে) */
         .dashboard-screen {
             display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: calc(100% - 50px);
+            height: calc(100% - 75px);
             position: relative;
             padding: 0 35px;
+        }
+
+        .plane-anim {
+            font-size: 26px;
+            display: inline-block;
+            margin-bottom: 2px;
+        }
+
+        @keyframes fly {
+            0% { transform: translate(-15px, 8px) rotate(-10deg); }
+            50% { transform: translate(0px, -8px) rotate(5deg); }
+            100% { transform: translate(15px, 8px) rotate(-10deg); }
+        }
+
+        .flying {
+            animation: fly 0.5s infinite ease-in-out;
         }
 
         .prediction-display {
@@ -179,14 +196,14 @@
             color: #ffffff;
             text-shadow: 0 0 20px #ffd700, 0 0 30px #ff4500;
             letter-spacing: 1px;
-            margin-bottom: 5px;
+            margin-bottom: 2px;
         }
 
         .status-text {
             font-size: 11px;
             color: #38bdf8;
             font-weight: 800;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             text-shadow: 0 0 5px rgba(0,0,0,0.8);
         }
 
@@ -198,7 +215,7 @@
             background: linear-gradient(135deg, #22c55e, #15803d);
             color: #fff;
             font-weight: 900;
-            font-size: 14px;
+            font-size: 13px;
             cursor: pointer;
             text-transform: uppercase;
             box-shadow: 0 4px 15px rgba(34, 197, 94, 0.5);
@@ -210,7 +227,7 @@
     <!-- ১. ব্যাকগ্রাউন্ড গেম ফ্রেম -->
     <iframe class="game-frame" src="https://hgnice.bet/#/register?invitationCode=68758106622"></iframe>
 
-    <!-- ২. হালকা ব্লার ও শ্যাডো ওভারলে -->
+    <!-- ২. ব্লার ও শ্যাডো ব্যাকগ্রাউন্ড -->
     <div class="bg-overlay" id="bgOverlay"></div>
 
     <!-- ৩. ফ্লোটিং ড্র্যাগেবল আইকন -->
@@ -218,10 +235,10 @@
         <img src="https://cdn.imageurlgenerator.com/uploads/3420d277-7bc7-4882-aa5e-11d91ee5e9e8.jpg" alt="Icon">
     </div>
 
-    <!-- ৪. ড্র্যাগেবল পপআপ ফ্রেম (তোর দেওয়া নতুন ইমেজ ডিজাইন)[span_1](start_span)[span_1](end_span) -->
+    <!-- ৪. ড্র্যাগেবল ঈগল ফ্রেম পপআপ (অরিজিনাল ডিজাইন)[span_1](start_span)[span_1](end_span) -->
     <div class="overlay-modal" id="overlayModal">
         <div class="popup-header" id="popupHeader">
-            <button class="close-btn" onclick="toggleModal()">&times;</button>
+            <button class="close-btn" id="closeBtn">&times;</button>
         </div>
 
         <!-- সিকিউরিটি পাসওয়ার্ড স্ক্রিন -->
@@ -232,18 +249,23 @@
             <p id="errorMsg" style="color: #ff4d4d; font-size: 11px; font-weight: 700; display: none;">❌ ভুল পাসওয়ার্ড!</p>
         </div>
 
-        <!-- ফ্রেমের মাঝখানের প্রেডিকশন ড্যাশবোর্ড -->
+        <!-- ফ্রেমের ভেতরের প্রেডিকশন ইন্টারফেস -->
         <div class="dashboard-screen" id="dashScreen">
+            <div class="plane-anim" id="planeIcon">✈️</div>
             <div class="prediction-display" id="predResult">2.10x</div>
             <div class="status-text" id="statusText">AUTO CASHOUT @ 2.10X</div>
-            <button class="get-signal-btn" id="signalBtn" onclick="getSignal()">⚡ GET SIGNAL ⚡</button>
+            <button class="get-signal-btn" id="signalBtn" onclick="toggleAutoPrediction()">⚡ START AUTO HACK ⚡</button>
         </div>
     </div>
 
     <script>
         const modal = document.getElementById('overlayModal');
         const overlay = document.getElementById('bgOverlay');
+        const closeBtn = document.getElementById('closeBtn');
+        let isRunning = false;
+        let autoInterval = null;
 
+        // পপআপ টগল (আইকনে ক্লিক করলে কাজ করবে)
         function toggleModal() {
             if (modal.style.display === 'block') {
                 modal.style.display = 'none';
@@ -257,6 +279,11 @@
                 document.getElementById('errorMsg').style.display = 'none';
             }
         }
+
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleModal();
+        });
 
         // পাসওয়ার্ড ভেরিফিকেশন (siddik58)
         function verifyPassword() {
@@ -272,147 +299,183 @@
             }
         }
 
-        // সিগন্যাল জেনারেটর
-        function getSignal() {
+        // অটো-লুপ ও রিয়েল-টাইম মার্কেট প্রেডিকশন
+        function toggleAutoPrediction() {
+            let btn = document.getElementById('signalBtn');
+            if (!isRunning) {
+                isRunning = true;
+                btn.innerText = "🛑 STOP AUTO HACK";
+                btn.style.background = "linear-gradient(135deg, #ef4444, #991b1b)";
+                startLoop();
+            } else {
+                stopLoop();
+            }
+        }
+
+        function startLoop() {
+            runSingleRound();
+            autoInterval = setInterval(() => {
+                if (isRunning) runSingleRound();
+            }, 8000);
+        }
+
+        function stopLoop() {
+            isRunning = false;
+            clearInterval(autoInterval);
+            let btn = document.getElementById('signalBtn');
+            btn.innerText = "⚡ START AUTO HACK ⚡";
+            btn.style.background = "linear-gradient(135deg, #22c55e, #15803d)";
+            document.getElementById('statusText').innerText = "AI SYSTEM PAUSED";
+            document.getElementById('planeIcon').classList.remove('flying');
+        }
+
+        function runSingleRound() {
             let predResult = document.getElementById('predResult');
             let statusText = document.getElementById('statusText');
-            let btn = document.getElementById('signalBtn');
+            let planeIcon = document.getElementById('planeIcon');
 
-            btn.disabled = true;
-            btn.innerText = "ANALYZING...";
+            statusText.innerText = "🔄 ANALYZING GAME MARKET...";
             predResult.innerText = "---";
-            statusText.innerText = "SCANNING GAME DATA...";
+            planeIcon.classList.remove('flying');
 
             setTimeout(() => {
-                let targetVal = (Math.random() * (4.80 - 1.35) + 1.35).toFixed(2);
-                predResult.innerText = targetVal + "x";
-                statusText.innerText = "AUTO CASHOUT @ " + targetVal + "X";
-                btn.innerText = "⚡ GET SIGNAL ⚡";
-                btn.disabled = false;
-            }, 1200);
+                if (!isRunning) return;
+                statusText.innerText = "✈️ FLIGHT IN PROGRESS...";
+                planeIcon.classList.add('flying');
+
+                let targetVal = (Math.random() * (4.80 - 1.30) + 1.30).toFixed(2);
+                let currentVal = 1.00;
+
+                let countInterval = setInterval(() => {
+                    if (!isRunning) {
+                        clearInterval(countInterval);
+                        return;
+                    }
+                    currentVal += 0.15;
+                    if (currentVal >= targetVal) {
+                        currentVal = parseFloat(targetVal);
+                        clearInterval(countInterval);
+                        planeIcon.classList.remove('flying');
+                        predResult.innerText = currentVal.toFixed(2) + "x";
+                        statusText.innerText = "🎯 CRASH POINT PREDICTED";
+                    } else {
+                        predResult.innerText = currentVal.toFixed(2) + "x";
+                    }
+                }, 70);
+            }, 2000);
         }
 
-        // ১. আইকন ড্র্যাগ ও ক্লিক হ্যান্ডলার
+        // ১. আইকন ড্র্যাগ ও ক্লিকে পপআপ ওপেন ফিক্সড লজিক
         const dragIcon = document.getElementById('dragIcon');
-        let iconMoved = false;
+        let iconDragging = false;
+        let startX, startY;
 
-        makeElementDraggable(dragIcon, dragIcon, () => {
-            if (!iconMoved) toggleModal();
+        dragIcon.addEventListener('touchstart', (e) => {
+            iconDragging = false;
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+            dragStart(e);
+        }, {passive: false});
+
+        window.addEventListener('touchmove', (e) => {
+            if (iconDragging) drag(e);
+        }, {passive: false});
+
+        window.addEventListener('touchend', (e) => {
+            if (iconDragging) {
+                let endX = e.changedTouches[0].clientX;
+                let endY = e.changedTouches[0].clientY;
+                if (Math.abs(endX - startX) < 5 && Math.abs(endY - startY) < 5) {
+                    toggleModal();
+                }
+                iconDragging = false;
+            }
         });
 
-        function makeElementDraggable(element, handle, onClick) {
-            let isDragging = false, initialX, initialY, startX, startY;
+        dragIcon.addEventListener('mousedown', (e) => {
+            iconDragging = false;
+            startX = e.clientX;
+            startY = e.clientY;
+            dragStart(e);
+        });
 
-            handle.addEventListener('touchstart', (e) => {
-                iconMoved = false;
-                startX = e.touches[0].clientX;
-                startY = e.touches[0].clientY;
-                dragStart(e);
-            }, {passive: false});
+        window.addEventListener('mousemove', (e) => {
+            if (iconDragging) drag(e);
+        });
 
-            window.addEventListener('touchend', (e) => {
-                if (isDragging) {
-                    isDragging = false;
-                    let endX = e.changedTouches[0].clientX;
-                    let endY = e.changedTouches[0].clientY;
-                    if (Math.abs(endX - startX) < 6 && Math.abs(endY - startY) < 6) {
-                        if (onClick) onClick();
-                    }
+        window.addEventListener('mouseup', (e) => {
+            if (iconDragging) {
+                if (Math.abs(e.clientX - startX) < 5 && Math.abs(e.clientY - startY) < 5) {
+                    toggleModal();
                 }
-            });
-
-            window.addEventListener('touchmove', (e) => {
-                if (isDragging) {
-                    iconMoved = true;
-                    drag(e);
-                }
-            }, {passive: false});
-
-            handle.addEventListener('mousedown', (e) => {
-                iconMoved = false;
-                startX = e.clientX;
-                startY = e.clientY;
-                dragStart(e);
-            });
-
-            window.addEventListener('mouseup', (e) => {
-                if (isDragging) {
-                    isDragging = false;
-                    if (Math.abs(e.clientX - startX) < 6 && Math.abs(e.clientY - startY) < 6) {
-                        if (onClick) onClick();
-                    }
-                }
-            });
-
-            window.addEventListener('mousemove', (e) => {
-                if (isDragging) {
-                    iconMoved = true;
-                    drag(e);
-                }
-            });
-
-            function dragStart(e) {
-                isDragging = true;
-                let clientX = e.type === "touchstart" ? e.touches[0].clientX : e.clientX;
-                let clientY = e.type === "touchstart" ? e.touches[0].clientY : e.clientY;
-                initialX = clientX - element.offsetLeft;
-                initialY = clientY - element.offsetTop;
+                iconDragging = false;
             }
+        });
 
-            function drag(e) {
-                if (!isDragging) return;
-                e.preventDefault();
-                let clientX = e.type === "touchmove" ? e.touches[0].clientX : e.clientX;
-                let clientY = e.type === "touchmove" ? e.touches[0].clientY : e.clientY;
-                element.style.left = (clientX - initialX) + "px";
-                element.style.top = (clientY - initialY) + "px";
-                element.style.transform = "none";
-                element.style.position = 'fixed';
-            }
+        let initialX, initialY;
+        function dragStart(e) {
+            iconDragging = true;
+            let clientX = e.type.includes("touch") ? e.touches[0].clientX : e.clientX;
+            let clientY = e.type.includes("touch") ? e.touches[0].clientY : e.clientY;
+            initialX = clientX - dragIcon.offsetLeft;
+            initialY = clientY - dragIcon.offsetTop;
         }
 
-        // ২. পপআপ ফ্রেম ড্র্যাগ হ্যান্ডলার
+        function drag(e) {
+            if (!iconDragging) return;
+            e.preventDefault();
+            let clientX = e.type.includes("touch") ? e.touches[0].clientX : e.clientX;
+            let clientY = e.type.includes("touch") ? e.touches[0].clientY : e.clientY;
+            
+            let x = clientX - initialX;
+            let y = clientY - initialY;
+
+            x = Math.max(0, Math.min(x, window.innerWidth - dragIcon.offsetWidth));
+            y = Math.max(0, Math.min(y, window.innerHeight - dragIcon.offsetHeight));
+
+            dragIcon.style.left = x + "px";
+            dragIcon.style.top = y + "px";
+            dragIcon.style.position = 'fixed';
+        }
+
+        // ২. ঈগল পপআপ ফ্রেম ড্র্যাগিং লজিক
         const popupHeader = document.getElementById('popupHeader');
-        makePopupDraggable(modal, popupHeader);
+        let popupDragging = false, popInitialX, popInitialY;
 
-        function makePopupDraggable(element, handle) {
-            let isDragging = false, initialX, initialY;
+        popupHeader.addEventListener('touchstart', (e) => {
+            if (e.target.classList.contains('close-btn')) return;
+            popupDragging = true;
+            popInitialX = e.touches[0].clientX - modal.offsetLeft;
+            popInitialY = e.touches[0].clientY - modal.offsetTop;
+        }, {passive: false});
 
-            handle.addEventListener('touchstart', (e) => {
-                if (e.target.classList.contains('close-btn')) return;
-                isDragging = true;
-                initialX = e.touches[0].clientX - element.offsetLeft;
-                initialY = e.touches[0].clientY - element.offsetTop;
-            }, {passive: false});
+        window.addEventListener('touchend', () => popupDragging = false);
 
-            window.addEventListener('touchend', () => isDragging = false);
+        window.addEventListener('touchmove', (e) => {
+            if (!popupDragging) return;
+            e.preventDefault();
+            modal.style.left = (e.touches[0].clientX - popInitialX) + "px";
+            modal.style.top = (e.touches[0].clientY - popInitialY) + "px";
+            modal.style.transform = "none";
+            modal.style.position = 'fixed';
+        }, {passive: false});
 
-            window.addEventListener('touchmove', (e) => {
-                if (!isDragging) return;
-                e.preventDefault();
-                element.style.left = (e.touches[0].clientX - initialX) + "px";
-                element.style.top = (e.touches[0].clientY - initialY) + "px";
-                element.style.transform = "none";
-                element.style.position = 'fixed';
-            }, {passive: false});
+        popupHeader.addEventListener('mousedown', (e) => {
+            if (e.target.classList.contains('close-btn')) return;
+            popupDragging = true;
+            popInitialX = e.clientX - modal.offsetLeft;
+            popInitialY = e.clientY - modal.offsetTop;
+        });
 
-            handle.addEventListener('mousedown', (e) => {
-                if (e.target.classList.contains('close-btn')) return;
-                isDragging = true;
-                initialX = e.clientX - element.offsetLeft;
-                initialY = e.clientY - element.offsetTop;
-            });
+        window.addEventListener('mouseup', () => popupDragging = false);
 
-            window.addEventListener('mouseup', () => isDragging = false);
-
-            window.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
-                element.style.left = (e.clientX - initialX) + "px";
-                element.style.top = (e.clientY - initialY) + "px";
-                element.style.transform = "none";
-                element.style.position = 'fixed';
-            });
-        }
+        window.addEventListener('mousemove', (e) => {
+            if (!popupDragging) return;
+            modal.style.left = (e.clientX - popInitialX) + "px";
+            modal.style.top = (e.clientY - popInitialY) + "px";
+            modal.style.transform = "none";
+            modal.style.position = 'fixed';
+        });
     </script>
 </body>
 </html>
