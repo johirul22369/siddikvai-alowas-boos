@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SIDDIK OFFICIAL ORIGINAL AI HACK</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Montserrat:wght@600;700;800;900&family=Hind+Siliguri:wght@600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Montserrat:wght@700;800;900&family=Hind+Siliguri:wght@600;700&display=swap');
 
         * {
             box-sizing: border-box;
@@ -13,666 +13,489 @@
             padding: 0;
             font-family: 'Montserrat', 'Hind Siliguri', sans-serif;
             user-select: none;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body, html {
             width: 100%;
             height: 100%;
-            background: #07080f;
-            color: #fff;
             overflow: hidden;
+            background: #000;
         }
 
-        /* অ্যাপ কন্টেইনার */
-        .app-shell {
+        /* ব্যাকগ্রাউন্ড ফুল স্ক্রিন গেম ফ্রেম (রেফারেল লিংক) */
+        .game-frame {
             width: 100%;
             height: 100%;
-            display: flex;
-            flex-direction: column;
-            background: radial-gradient(circle at top right, #1b1438 0%, #07080f 55%);
+            border: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
         }
 
-        /* ১. ভিআইপি লগইন স্ক্রিন */
-        .login-view {
+        /* ফ্লোটিং ড্র্যাগেবল আইকন (স্ক্রিন ওপেন করার জন্য) */
+        .floating-icon {
             position: fixed;
-            inset: 0;
-            background: radial-gradient(circle at center, #1a103c 0%, #05050a 100%);
+            top: 100px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2.5px solid #ffd700;
+            background: #000;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.9);
             z-index: 9999;
+            cursor: pointer;
+            overflow: hidden;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 24px;
-            text-align: center;
+            touch-action: none;
         }
 
-        .login-card {
+        .floating-icon img {
             width: 100%;
-            max-width: 380px;
-            background: rgba(18, 19, 32, 0.9);
-            border: 1.5px solid rgba(255, 215, 0, 0.45);
-            border-radius: 24px;
-            padding: 32px 22px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 215, 0, 0.15);
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
         }
 
-        .crown-badge {
-            width: 64px;
-            height: 64px;
-            margin: 0 auto 14px;
+        /* স্ক্রিনশটের হুবহু ড্র্যাগেবল পপআপ উইন্ডো[span_4](start_span)[span_4](end_span) */
+        .overlay-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 92%;
+            max-width: 375px;
+            background: linear-gradient(145deg, #100c1c, #07060b);
+            border: 2px solid #38bdf8;
             border-radius: 18px;
-            background: linear-gradient(135deg, #ffd700, #d97706);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(56, 189, 248, 0.35);
+            z-index: 10000;
+            padding: 12px;
+            color: #fff;
+            touch-action: none;
+        }
+
+        /* পপআপের টপ ড্র্যাগ হেডার (স্ক্রিনশট স্টایل)[span_5](start_span)[span_5](end_span) */
+        .radar-header {
+            background: rgba(0, 0, 0, 0.65);
+            border: 1px solid rgba(255, 215, 0, 0.25);
+            border-radius: 10px;
+            padding: 8px 10px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.5);
+            justify-content: space-between;
+            margin-bottom: 10px;
+            cursor: move;
         }
 
-        .login-title {
-            font-size: 16px;
+        .header-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .brand-title {
+            font-size: 10px;
             font-weight: 900;
             color: #ffd700;
             letter-spacing: 0.5px;
-            margin-bottom: 6px;
         }
 
-        .login-sub {
-            font-size: 12px;
-            color: #94a3b8;
-            margin-bottom: 22px;
+        .radar-badge {
+            background: rgba(56, 189, 248, 0.2);
+            color: #38bdf8;
+            font-size: 8px;
+            padding: 2px 6px;
+            border-radius: 5px;
+            border: 1px solid rgba(56, 189, 248, 0.4);
         }
 
-        .pass-input {
+        .close-btn {
+            background: none;
+            border: none;
+            color: #ff4d4d;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* পাসওয়ার্ড লগইন স্ক্রিন */
+        .auth-screen {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 15px 5px;
+            text-align: center;
+        }
+
+        .input-box {
             width: 100%;
-            padding: 14px;
-            border-radius: 14px;
-            border: 1.5px solid rgba(255, 215, 0, 0.4);
-            background: #06070d;
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            background: #000;
             color: #ffd700;
+            text-align: center;
             font-size: 16px;
             font-weight: 800;
-            text-align: center;
             outline: none;
-            margin-bottom: 14px;
         }
 
-        .pass-input:focus {
-            border-color: #ffd700;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
-        }
-
-        .primary-btn {
-            width: 100%;
-            padding: 15px;
-            border-radius: 14px;
-            border: none;
-            background: linear-gradient(90deg, #ffd700, #f59e0b);
-            color: #000;
-            font-size: 14px;
-            font-weight: 900;
-            letter-spacing: 1px;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
-            transition: transform 0.1s;
-        }
-
-        .primary-btn:active {
-            transform: scale(0.97);
-        }
-
-        /* ২. টপ অ্যাপ বার */
-        .app-header {
-            padding: 14px 18px;
-            background: rgba(12, 13, 24, 0.92);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            backdrop-filter: blur(10px);
-        }
-
-        .brand-wrap {
-            display: flex;
-            align-items: center;
+        /* মেইন পপআপ ড্যাশবোর্ড */
+        .dashboard-screen {
+            display: none;
+            flex-direction: column;
             gap: 10px;
         }
 
-        .brand-logo {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #ffd700, #ea580c);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            font-weight: 900;
-            color: #000;
-        }
-
-        .brand-name {
-            font-size: 12px;
-            font-weight: 900;
-            color: #fff;
-            letter-spacing: 0.4px;
-        }
-
-        .brand-tag {
-            font-size: 10px;
-            color: #4ade80;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .live-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: #4ade80;
-            box-shadow: 0 0 8px #4ade80;
-        }
-
-        .vip-pill {
-            background: rgba(255, 215, 0, 0.15);
-            border: 1px solid rgba(255, 215, 0, 0.4);
-            color: #ffd700;
-            font-size: 10px;
-            font-weight: 800;
-            padding: 5px 10px;
-            border-radius: 20px;
-        }
-
-        /* ৩. মেইন কনটেন্ট এরিয়া */
-        .app-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 16px;
-            padding-bottom: 85px;
-        }
-
-        .tab-page {
-            display: none;
-            animation: fadeIn 0.25s ease;
-        }
-
-        .tab-page.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* HOME TAB STYLES */
-        .hero-banner {
-            background: linear-gradient(135deg, #1e1b4b 0%, #31102f 100%);
-            border: 1px solid rgba(255, 215, 0, 0.35);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 16px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-banner h2 {
-            font-size: 18px;
-            font-weight: 900;
-            color: #ffd700;
-            margin-bottom: 6px;
-        }
-
-        .hero-banner p {
-            font-size: 12px;
-            color: #cbd5e1;
-            line-height: 1.5;
-            margin-bottom: 14px;
-        }
-
-        .stats-grid {
+        /* গেম মোড ট্যাব (Aviator & WinGo একসাথে)[span_6](start_span)[span_6](end_span) */
+        .mode-tabs {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 18px;
-        }
-
-        .stat-card {
-            background: #111322;
+            gap: 6px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 3px;
+            border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 14px;
-            text-align: center;
         }
 
-        .stat-val {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 20px;
-            font-weight: 900;
-            color: #38bdf8;
-            margin-bottom: 4px;
-        }
-
-        .stat-lbl {
-            font-size: 10px;
+        .m-tab {
+            padding: 7px;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
             color: #94a3b8;
-            font-weight: 700;
-        }
-
-        .quick-cards {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .feature-card {
-            background: #111322;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 18px;
-            padding: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-        }
-
-        .feature-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .f-icon {
-            width: 46px;
-            height: 46px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-        }
-
-        /* WINGO MARKET TAB STYLES */
-        .market-box {
-            background: #111322;
-            border: 1.5px solid rgba(56, 189, 248, 0.35);
-            border-radius: 22px;
-            padding: 20px;
-            text-align: center;
-            margin-bottom: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-        }
-
-        .period-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #07080f;
-            padding: 10px 14px;
-            border-radius: 12px;
-            margin-bottom: 18px;
             font-size: 11px;
             font-weight: 800;
-        }
-
-        .wingo-big-res {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 44px;
-            font-weight: 900;
-            color: #facc15;
-            text-shadow: 0 0 25px rgba(250, 204, 21, 0.5);
-            margin: 10px 0;
-        }
-
-        .wingo-pills {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 18px;
-        }
-
-        .w-pill {
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 900;
-        }
-
-        /* AVIATOR AI TAB STYLES */
-        .aviator-radar {
-            position: relative;
-            height: 230px;
-            border-radius: 22px;
-            background-color: #140914;
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-                radial-gradient(circle at bottom right, rgba(225, 29, 72, 0.35), transparent 70%);
-            background-size: 26px 26px, 26px 26px, 100% 100%;
-            border: 1.5px solid rgba(244, 63, 94, 0.45);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            margin-bottom: 16px;
-        }
-
-        .jet-float {
-            font-size: 36px;
-            animation: jetHover 2s infinite ease-in-out;
-            margin-bottom: 6px;
-            z-index: 2;
-        }
-
-        @keyframes jetHover {
-            0%, 100% { transform: translate(-8px, 4px) rotate(-5deg); }
-            50% { transform: translate(8px, -6px) rotate(5deg); }
-        }
-
-        .aviator-mult {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 46px;
-            font-weight: 900;
-            color: #fff;
-            text-shadow: 0 0 25px rgba(255, 30, 86, 0.8);
-            z-index: 2;
-        }
-
-        .btn-red-orange {
-            width: 100%;
-            padding: 15px;
-            border-radius: 14px;
-            border: none;
-            background: linear-gradient(90deg, #ff1e56 0%, #ff7b00 100%);
-            color: #fff;
-            font-size: 14px;
-            font-weight: 900;
-            letter-spacing: 1px;
             cursor: pointer;
-            box-shadow: 0 6px 22px rgba(255, 30, 86, 0.45);
         }
 
-        /* LIVE GAME TAB (IFRAME) */
-        .game-tab-container {
-            width: 100%;
-            height: calc(100vh - 130px);
-            border-radius: 16px;
-            overflow: hidden;
+        .m-tab.active {
+            background: linear-gradient(135deg, #ffd700, #d97706);
+            color: #000;
+        }
+
+        /* স্ট্যাটাস বার[span_7](start_span)[span_7](end_span) */
+        .sub-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+            font-weight: 700;
+            color: #cbd5e1;
+            padding: 0 2px;
+        }
+
+        .safe-tag {
+            color: #4ade80;
+            background: rgba(74, 222, 128, 0.15);
+            padding: 2px 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(74, 222, 128, 0.3);
+            font-size: 10px;
+        }
+
+        /* গ্রাফ বা প্রেডিকশন বক্স[span_8](start_span)[span_8](end_span) */
+        .graph-box {
+            position: relative;
+            background: radial-gradient(circle, rgba(30, 10, 60, 0.9) 0%, rgba(5, 2, 15, 0.98) 100%);
             border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 14px;
+            padding: 18px 10px;
+            overflow: hidden;
+            text-align: center;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
         }
 
-        .game-tab-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        /* ৪. বটম নেভিগেশন বার */
-        .bottom-nav {
-            position: fixed;
+        .graph-line {
+            position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 68px;
-            background: rgba(12, 13, 24, 0.96);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            backdrop-filter: blur(12px);
-            z-index: 100;
+            height: 60%;
+            background: linear-gradient(to top, rgba(255, 75, 43, 0.25), transparent);
+            clip-path: polygon(0 100%, 10% 80%, 30% 70%, 50% 50%, 75% 30%, 100% 5%, 100% 100%);
         }
 
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            color: #64748b;
+        .cashout-locked {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.15);
+            color: #ffd700;
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            padding: 3px 10px;
+            border-radius: 6px;
             font-size: 10px;
             font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .prediction-display {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 38px;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            margin-bottom: 2px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .auto-cashout-text {
+            font-size: 11px;
+            color: #38bdf8;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* WinGo স্পেশাল স্টাইল */
+        .wingo-res {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 38px;
+            font-weight: 900;
+            color: #facc15;
+            margin: 6px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* গেট সিগন্যাল বাটন[span_9](start_span)[span_9](end_span) */
+        .btn-action {
+            width: 100%;
+            padding: 13px;
+            border-radius: 12px;
+            border: none;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            color: #fff;
+            font-weight: 900;
+            font-size: 14px;
             cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .nav-item span.nav-ico {
-            font-size: 20px;
-        }
-
-        .nav-item.active {
-            color: #ffd700;
-        }
-
-        .nav-item.active span.nav-ico {
-            transform: translateY(-2px);
-            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+            text-transform: uppercase;
+            box-shadow: 0 5px 18px rgba(255, 75, 43, 0.5);
+            letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
 
-    <!-- ১. VIP পাসওয়ার্ড লগইন স্ক্রিন -->
-    <div class="login-view" id="loginView">
-        <div class="login-card">
-            <div class="crown-badge">👑</div>
-            <div class="login-title">SIDDIK OFFICIAL ORIGINAL AI HACK</div>
-            <div class="login-sub">ভিআইপি সিস্টেম আনলক করতে আপনার পাসওয়ার্ড দিন</div>
-            <input type="password" id="passInput" class="pass-input" placeholder="পাসওয়ার্ড লিখুন">
-            <button class="primary-btn" onclick="unlockApp()">🔓 UNLOCK SYSTEM</button>
-            <p id="errText" style="color: #f87171; font-size: 12px; font-weight: 700; margin-top: 10px; display: none;">❌ ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন।</p>
+    <!-- ব্যাকগ্রাউন্ড গেম ফ্রেম (রেফারেল লিংক) -->
+    <iframe class="game-frame" src="https://hgnice.bet/#/register?invitationCode=68758106622"></iframe>
+
+    <!-- ফ্লোটিং আইকন -->
+    <div class="floating-icon" id="dragIcon">
+        <img src="https://cdn.imageurlgenerator.com/uploads/3420d277-7bc7-4882-aa5e-11d91ee5e9e8.jpg" alt="Icon">
+    </div>
+
+    <!-- পপআপ মডাল (স্ক্রিনশটের হুবহু লেআউট)[span_10](start_span)[span_10](end_span) -->
+    <div class="overlay-modal" id="overlayModal">
+        
+        <!-- ড্র্যাগ হেডার -->
+        <div class="radar-header" id="dragHeader">
+            <div class="header-title-wrap">
+                <span class="brand-title">SIDDIK HACK</span>
+                <span class="radar-badge">CRASH RADAR</span>
+            </div>
+            <button class="close-btn" onclick="toggleModal()">&times;</button>
+        </div>
+
+        <!-- পাসওয়ার্ড স্ক্রিন -->
+        <div class="auth-screen" id="authScreen">
+            <div style="font-size: 13px; color: #ffd700; font-weight: 700;">🔒 SIDDIK VIP PASSWORD</div>
+            <input type="password" id="passInput" class="input-box" placeholder="পাসওয়ার্ড দিন (siddik58)">
+            <button class="btn-action" onclick="verifyPassword()">UNLOCK HACK</button>
+            <p id="errorMsg" style="color: #ff4d4d; font-size: 11px; font-weight: 700; display: none;">❌ ভুল পাসওয়ার্ড!</p>
+        </div>
+
+        <!-- ড্যাশবোর্ড স্ক্রিন (Aviator + WinGo) -->
+        <div class="dashboard-screen" id="dashScreen">
+            
+            <!-- মোড সুইচ ট্যাব -->
+            <div class="mode-tabs">
+                <button class="m-tab active" id="tabAviator" onclick="switchMode('aviator')">✈️ AVIATOR</button>
+                <button class="m-tab" id="tabWingo" onclick="switchMode('wingo')">🎯 WINGO</button>
+            </div>
+
+            <div class="sub-header">
+                <span id="serverTitle">SPRIBE AVIATOR AI #2</span>
+                <span class="safe-tag">🛡️ 96.2% SAFE</span>
+            </div>
+
+            <!-- AVIATOR VIEW -->
+            <div class="graph-box" id="aviatorView">
+                <div class="graph-line"></div>
+                <div class="cashout-locked">🔒 CASHOUT LOCKED</div>
+                <div class="prediction-display" id="predResult">2.10x</div>
+                <div class="auto-cashout-text" id="autoText">AUTO CASHOUT @ 2.10X</div>
+            </div>
+
+            <!-- WINGO VIEW -->
+            <div class="graph-box" id="wingoView" style="display: none;">
+                <div class="cashout-locked" id="wingoPeriod">PERIOD #2026111201</div>
+                <div class="wingo-res" id="wingoSize">BIG</div>
+                <div class="auto-cashout-text" id="wingoDesc">WINNER COLOR: GREEN (7)</div>
+            </div>
+
+            <button class="btn-action" id="signalBtn" onclick="getSignal()">⚡ GET SIGNAL ⚡</button>
         </div>
     </div>
 
-    <!-- ২. ফুল-স্ক্রিন অ্যাপ ইন্টারফেস -->
-    <div class="app-shell">
-        
-        <!-- টপ বার -->
-        <header class="app-header">
-            <div class="brand-wrap">
-                <div class="brand-logo">S</div>
-                <div>
-                    <div class="brand-name">SIDDIK ORIGINAL AI</div>
-                    <div class="brand-tag"><span class="live-dot"></span> SERVER CONNECTED</div>
-                </div>
-            </div>
-            <div class="vip-pill">VIP PRO v4.0</div>
-        </header>
-
-        <!-- মেইন কনটেন্ট -->
-        <main class="app-content">
-            
-            <!-- TAB 1: HOME -->
-            <section class="tab-page active" id="page-home">
-                <div class="hero-banner">
-                    <h2>⚡ QUANTUM AI PREDICTOR</h2>
-                    <p>WinGo Market এবং Aviator Crash Radar—দুইটি প্রিমিয়াম এআই টুল এখন একই অ্যাপে! নিচের অপশন থেকে আপনার গেম সিলেক্ট করুন।</p>
-                    <button class="primary-btn" onclick="switchTab('game')">🎮 PLAY LIVE GAME NOW</button>
-                </div>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-val">97.4%</div>
-                        <div class="stat-lbl">AI ACCURACY RATE</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-val" style="color: #4ade80;">ACTIVE</div>
-                        <div class="stat-lbl">HGNICE API STATUS</div>
-                    </div>
-                </div>
-
-                <div class="quick-cards">
-                    <div class="feature-card" onclick="switchTab('wingo')">
-                        <div class="feature-info">
-                            <div class="f-icon" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8;">🎯</div>
-                            <div>
-                                <div style="font-size: 14px; font-weight: 800;">WINGO MARKET AI</div>
-                                <div style="font-size: 11px; color: #94a3b8;">Big/Small & Color Signal</div>
-                            </div>
-                        </div>
-                        <span style="color: #ffd700; font-weight: 900;">➔</span>
-                    </div>
-
-                    <div class="feature-card" onclick="switchTab('aviator')">
-                        <div class="feature-info">
-                            <div class="f-icon" style="background: rgba(244, 63, 94, 0.15); color: #f43f5e;">✈️</div>
-                            <div>
-                                <div style="font-size: 14px; font-weight: 800;">AVIATOR CRASH RADAR</div>
-                                <div style="font-size: 11px; color: #94a3b8;">Live Multiplier Predictor</div>
-                            </div>
-                        </div>
-                        <span style="color: #ffd700; font-weight: 900;">➔</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- TAB 2: WINGO MARKET -->
-            <section class="tab-page" id="page-wingo">
-                <div class="market-box">
-                    <div class="period-bar">
-                        <span style="color: #38bdf8;">WINGO 1 MIN</span>
-                        <span id="wingoPeriodTxt" style="color: #ffd700;">PERIOD #2026111201</span>
-                    </div>
-
-                    <div style="font-size: 11px; color: #94a3b8; font-weight: 700;">NEXT MARKET PREDICTION</div>
-                    <div class="wingo-big-res" id="wingoResSize">BIG</div>
-
-                    <div class="wingo-pills">
-                        <span class="w-pill" id="wingoResColor" style="background: #16a34a;">GREEN</span>
-                        <span class="w-pill" id="wingoResNum" style="background: rgba(255,255,255,0.1); border: 1px solid #ffd700;">NUMBER: 7</span>
-                    </div>
-
-                    <button class="primary-btn" id="wingoBtn" onclick="getWingoSignal()">⚡ GET WINGO SIGNAL</button>
-                </div>
-            </section>
-
-            <!-- TAB 3: AVIATOR AI -->
-            <section class="tab-page" id="page-aviator">
-                <div class="aviator-radar">
-                    <svg style="position:absolute; bottom:10px; left:0; width:100%; height:130px;" viewBox="0 0 300 100" preserveAspectRatio="none">
-                        <path d="M 10 92 Q 160 88, 285 12" fill="none" stroke="#ff2a6d" stroke-width="3.5" stroke-linecap="round"/>
-                    </svg>
-                    <div class="jet-float">✈️</div>
-                    <div style="font-size: 10px; color: #fde047; font-weight: 800; letter-spacing: 1px; z-index: 2;">✨ CASHOUT LOCKED</div>
-                    <div class="aviator-mult" id="aviatorResMult">2.10x</div>
-                    <div style="font-size: 11px; color: #cbd5e1; font-weight: 700; margin-top: 4px; z-index: 2;" id="aviatorResSub">AUTO CASHOUT @ 2.10X</div>
-                </div>
-
-                <button class="btn-red-orange" id="aviatorBtn" onclick="getAviatorSignal()">⚡ GET AVIATOR SIGNAL</button>
-            </section>
-
-            <!-- TAB 4: LIVE GAME -->
-            <section class="tab-page" id="page-game">
-                <div class="game-tab-container">
-                    <iframe src="https://hgnice.bet/#/register?invitationCode=68758106622"></iframe>
-                </div>
-            </section>
-
-        </main>
-
-        <!-- ৪. বটম নেভিগেশন বার -->
-        <nav class="bottom-nav">
-            <div class="nav-item active" id="nav-home" onclick="switchTab('home')">
-                <span class="nav-ico">🏠</span>
-                <span>HOME</span>
-            </div>
-            <div class="nav-item" id="nav-wingo" onclick="switchTab('wingo')">
-                <span class="nav-ico">📊</span>
-                <span>WINGO</span>
-            </div>
-            <div class="nav-item" id="nav-aviator" onclick="switchTab('aviator')">
-                <span class="nav-ico">✈️</span>
-                <span>AVIATOR</span>
-            </div>
-            <div class="nav-item" id="nav-game" onclick="switchTab('game')">
-                <span class="nav-ico">🎮</span>
-                <span>PLAY</span>
-            </div>
-        </nav>
-
-    </div>
-
     <script>
-        // পাসওয়ার্ড আনলক (siddik58)
-        function unlockApp() {
-            const pass = document.getElementById('passInput').value.trim();
-            const err = document.getElementById('errText');
-            if (pass === 'siddik58') {
-                document.getElementById('loginView').style.display = 'none';
-                updatePeriod();
+        const modal = document.getElementById('overlayModal');
+        let currentMode = 'aviator';
+
+        function toggleModal() {
+            modal.style.display = (modal.style.display === 'block') ? 'none' : 'block';
+        }
+
+        // পাসওয়ার্ড চেক (siddik58)
+        function verifyPassword() {
+            let input = document.getElementById('passInput').value;
+            let errorMsg = document.getElementById('errorMsg');
+
+            if (input === 'siddik58') {
+                document.getElementById('authScreen').style.display = 'none';
+                document.getElementById('dashScreen').style.display = 'flex';
+                errorMsg.style.display = 'none';
             } else {
-                err.style.display = 'block';
+                errorMsg.style.display = 'block';
             }
         }
 
-        // ট্যাব নেভিগেশন
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab-page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        // গেম মোড পরিবর্তন
+        function switchMode(mode) {
+            currentMode = mode;
+            const tA = document.getElementById('tabAviator');
+            const tW = document.getElementById('tabWingo');
+            const vA = document.getElementById('aviatorView');
+            const vW = document.getElementById('wingoView');
+            const sTitle = document.getElementById('serverTitle');
 
-            document.getElementById('page-' + tabName).classList.add('active');
-            document.getElementById('nav-' + tabName).classList.add('active');
-
-            if (tabName === 'wingo') updatePeriod();
+            if (mode === 'aviator') {
+                tA.classList.add('active');
+                tW.classList.remove('active');
+                vA.style.display = 'flex';
+                vW.style.display = 'none';
+                sTitle.innerText = 'SPRIBE AVIATOR AI #2';
+            } else {
+                tW.classList.add('active');
+                tA.classList.remove('active');
+                vA.style.display = 'none';
+                vW.style.display = 'flex';
+                sTitle.innerText = 'WINGO 1MIN RADAR';
+                updatePeriod();
+            }
         }
 
         function updatePeriod() {
             const now = new Date();
             const mins = now.getHours() * 60 + now.getMinutes() + 1;
-            document.getElementById('wingoPeriodTxt').innerText = `PERIOD #20261112${String(mins).padStart(4, '0')}`;
+            document.getElementById('wingoPeriod').innerText = `PERIOD #20261112${String(mins).padStart(4, '0')}`;
         }
 
-        // WinGo সিগন্যাল জেনারেটর
-        function getWingoSignal() {
-            const btn = document.getElementById('wingoBtn');
-            const sizeEl = document.getElementById('wingoResSize');
-            const colorEl = document.getElementById('wingoResColor');
-            const numEl = document.getElementById('wingoResNum');
-
+        // সিগন্যাল জেনারেটর
+        function getSignal() {
+            let btn = document.getElementById('signalBtn');
             btn.disabled = true;
-            btn.innerText = '⏳ ANALYZING MARKET...';
-            sizeEl.innerText = '---';
-            updatePeriod();
+            btn.innerText = "ANALYZING...";
 
-            setTimeout(() => {
-                const num = Math.floor(Math.random() * 10);
-                const isBig = num >= 5;
-                const isGreen = [1, 3, 5, 7, 9].includes(num);
+            if (currentMode === 'aviator') {
+                let predResult = document.getElementById('predResult');
+                let autoText = document.getElementById('autoText');
+                predResult.innerText = "---";
+                autoText.innerText = "CALCULATING MULTIPLIER...";
 
-                sizeEl.innerText = isBig ? 'BIG' : 'SMALL';
-                sizeEl.style.color = isBig ? '#facc15' : '#38bdf8';
+                setTimeout(() => {
+                    let targetVal = (Math.random() * (4.80 - 1.40) + 1.40).toFixed(2);
+                    predResult.innerText = targetVal + "x";
+                    autoText.innerText = "AUTO CASHOUT @ " + targetVal + "X";
+                    btn.innerText = "⚡ GET SIGNAL ⚡";
+                    btn.disabled = false;
+                }, 1200);
+            } else {
+                updatePeriod();
+                let sizeEl = document.getElementById('wingoSize');
+                let descEl = document.getElementById('wingoDesc');
+                sizeEl.innerText = "---";
 
-                colorEl.innerText = isGreen ? 'GREEN' : 'RED';
-                colorEl.style.background = isGreen ? '#16a34a' : '#dc2626';
-
-                numEl.innerText = `NUMBER: ${num}`;
-                btn.innerText = '⚡ GET WINGO SIGNAL';
-                btn.disabled = false;
-            }, 1000);
+                setTimeout(() => {
+                    let num = Math.floor(Math.random() * 10);
+                    let isBig = num >= 5;
+                    let color = [1, 3, 5, 7, 9].includes(num) ? 'GREEN' : 'RED';
+                    
+                    sizeEl.innerText = isBig ? 'BIG' : 'SMALL';
+                    sizeEl.style.color = isBig ? '#facc15' : '#38bdf8';
+                    descEl.innerText = `WINNER COLOR: ${color} (${num})`;
+                    btn.innerText = "⚡ GET SIGNAL ⚡";
+                    btn.disabled = false;
+                }, 1200);
+            }
         }
 
-        // Aviator সিগন্যাল জেনারেটর
-        function getAviatorSignal() {
-            const btn = document.getElementById('aviatorBtn');
-            const multEl = document.getElementById('aviatorResMult');
-            const subEl = document.getElementById('aviatorResSub');
+        // ১. ফ্লোটিং আইকন ড্র্যাগ ও ইনস্ট্যান্ট ক্লিক হ্যান্ডলার
+        const dragIcon = document.getElementById('dragIcon');
+        let iconMoved = false, startX, startY, initialX, initialY, isDragging = false;
 
-            btn.disabled = true;
-            btn.innerText = '⏳ SCANNING RADAR...';
-            multEl.innerText = '---';
-            subEl.innerText = 'CALCULATING CRASH POINT...';
+        dragIcon.addEventListener('pointerdown', (e) => {
+            isDragging = true;
+            iconMoved = false;
+            startX = e.clientX;
+            startY = e.clientY;
+            initialX = e.clientX - dragIcon.offsetLeft;
+            initialY = e.clientY - dragIcon.offsetTop;
+            dragIcon.setPointerCapture(e.pointerId);
+        });
 
-            setTimeout(() => {
-                const mult = (Math.random() * (4.80 - 1.35) + 1.35).toFixed(2);
-                multEl.innerText = `${mult}x`;
-                subEl.innerText = `AUTO CASHOUT @ ${mult}X`;
-                btn.innerText = '⚡ GET AVIATOR SIGNAL';
-                btn.disabled = false;
-            }, 1000);
-        }
+        dragIcon.addEventListener('pointermove', (e) => {
+            if (!isDragging) return;
+            if (Math.abs(e.clientX - startX) > 4 || Math.abs(e.clientY - startY) > 4) {
+                iconMoved = true;
+            }
+            let x = Math.max(0, Math.min(e.clientX - initialX, window.innerWidth - dragIcon.offsetWidth));
+            let y = Math.max(0, Math.min(e.clientY - initialY, window.innerHeight - dragIcon.offsetHeight));
+            dragIcon.style.left = x + "px";
+            dragIcon.style.top = y + "px";
+            dragIcon.style.position = 'fixed';
+        });
+
+        dragIcon.addEventListener('pointerup', (e) => {
+            if (!iconMoved) toggleModal();
+            isDragging = false;
+            dragIcon.releasePointerCapture(e.pointerId);
+        });
+
+        // ২. পপআপ উইন্ডো ড্র্যাগ হ্যান্ডলার (হেডার ধরে সরাতে পারবে)
+        const dragHeader = document.getElementById('dragHeader');
+        let popDrag = false, popInitX, popInitY;
+
+        dragHeader.addEventListener('pointerdown', (e) => {
+            if (e.target.closest('button')) return;
+            popDrag = true;
+            const rect = modal.getBoundingClientRect();
+            modal.style.transform = 'none';
+            modal.style.left = rect.left + 'px';
+            modal.style.top = rect.top + 'px';
+            popInitX = e.clientX - rect.left;
+            popInitY = e.clientY - rect.top;
+            dragHeader.setPointerCapture(e.pointerId);
+        });
+
+        dragHeader.addEventListener('pointermove', (e) => {
+            if (!popDrag) return;
+            let x = Math.max(0, Math.min(e.clientX - popInitX, window.innerWidth - modal.offsetWidth));
+            let y = Math.max(0, Math.min(e.clientY - popInitY, window.innerHeight - modal.offsetHeight));
+            modal.style.left = x + 'px';
+            modal.style.top = y + 'px';
+            modal.style.position = 'fixed';
+        });
+
+        dragHeader.addEventListener('pointerup', (e) => {
+            popDrag = false;
+            dragHeader.releasePointerCapture(e.pointerId);
+        });
     </script>
 </body>
 </html>
