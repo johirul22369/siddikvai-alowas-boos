@@ -60,7 +60,7 @@
             pointer-events: none;
         }
 
-        /* ড্র্যাগেবল পপআপ মডাল (তোর দেওয়া অরিজিনাল ইমেজের পপআপ ব্যাকগ্রাউন্ড) */
+        /* ড্র্যাগেবল পপআপ মডাল */
         .overlay-modal {
             display: none;
             position: fixed;
@@ -145,7 +145,7 @@
             box-shadow: 0 4px 15px rgba(217, 119, 6, 0.6);
         }
 
-        /* প্রেডিকশন ওভারলে (ইমেজের একদম নির্দিষ্ট মাঝখানে সেট করার জন্য) */
+        /* প্রেডিকশন ওভারলে */
         .dashboard-screen {
             display: none;
             flex-direction: column;
@@ -192,7 +192,7 @@
 </head>
 <body>
 
-    <!-- ১. ব্যাকগ্রাউন্ড গেম ফ্রেম (রেফারেল লিংক) -->
+    <!-- ১. ব্যাকগ্রাউন্ড গেম ফ্রেম -->
     <iframe class="game-frame" src="https://hgnice.bet/#/register?invitationCode=68758106622"></iframe>
 
     <!-- ২. ফ্লোটিং ড্র্যাগেবল আইকন -->
@@ -200,13 +200,13 @@
         <img src="https://cdn.imageurlgenerator.com/uploads/3420d277-7bc7-4882-aa5e-11d91ee5e9e8.jpg" alt="Icon">
     </div>
 
-    <!-- ৩. ড্র্যাগেবল পপআপ (অরিজিনাল ইমেজ ব্যাকগ্রাউন্ড) -->
+    <!-- ৩. ড্র্যাগেবল পপআপ -->
     <div class="overlay-modal" id="overlayModal">
         <div class="popup-header" id="popupHeader">
             <button class="close-btn" onclick="toggleModal()">&times;</button>
         </div>
 
-        <!-- সিকিউরিটি পাসওয়ার্ড স্ক্রিন -->
+        <!-- সিকিউরিটি পাসওয়ার্ড স্ক্রিন (শুরুতে ফিক্সড ওপেন থাকবে) -->
         <div class="auth-screen" id="authScreen">
             <div class="auth-desc">🔑 SIDDIK AI VIP ACCESS</div>
             <input type="password" id="passInput" class="input-box" placeholder="পাসওয়ার্ড দিন">
@@ -226,7 +226,16 @@
         const modal = document.getElementById('overlayModal');
 
         function toggleModal() {
-            modal.style.display = (modal.style.display === 'block') ? 'none' : 'block';
+            if (modal.style.display === 'block') {
+                modal.style.display = 'none';
+            } else {
+                modal.style.display = 'block';
+                // প্রতিবার ওপেন করার সময় পাসওয়ার্ড স্ক্রিন রিসেট করে দেখাবে
+                document.getElementById('authScreen').style.display = 'flex';
+                document.getElementById('dashScreen').style.display = 'none';
+                document.getElementById('passInput').value = '';
+                document.getElementById('errorMsg').style.display = 'none';
+            }
         }
 
         // পাসওয়ার্ড ভেরিফিকেশন (siddik58)
@@ -258,37 +267,74 @@
             }, 1200);
         }
 
-        // ১. আইকন ড্র্যাগ (Icon Movement)
+        // ১. আইকন ড্র্যাগ এবং ক্লিক ফিক্সড হ্যান্ডলার
         const dragIcon = document.getElementById('dragIcon');
-        makeElementDraggable(dragIcon, dragIcon);
+        let iconMoved = false;
 
-        // ২. পপআপ উইন্ডো ড্র্যাগ (Popup Window Movement)
-        const popupHeader = document.getElementById('popupHeader');
-        makeElementDraggable(modal, popupHeader);
+        makeElementDraggable(dragIcon, dragIcon, () => {
+            if (!iconMoved) {
+                toggleModal();
+            }
+        });
 
-        function makeElementDraggable(element, handle) {
-            let isDragging = false, initialX, initialY;
+        function makeElementDraggable(element, handle, onClick) {
+            let isDragging = false, initialX, initialY, startX, startY;
 
-            handle.addEventListener('touchstart', dragStart, {passive: false});
-            window.addEventListener('touchend', dragEnd);
-            window.addEventListener('touchmove', drag, {passive: false});
+            handle.addEventListener('touchstart', (e) => {
+                iconMoved = false;
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+                dragStart(e);
+            }, {passive: false});
 
-            handle.addEventListener('mousedown', dragStart);
-            window.addEventListener('mouseup', dragEnd);
-            window.addEventListener('mousemove', drag);
+            window.addEventListener('touchend', (e) => {
+                if (isDragging) {
+                    isDragging = false;
+                    let endX = e.changedTouches[0].clientX;
+                    let endY = e.changedTouches[0].clientY;
+                    if (Math.abs(endX - startX) < 6 && Math.abs(endY - startY) < 6) {
+                        if (onClick) onClick();
+                    }
+                }
+            });
+
+            window.addEventListener('touchmove', (e) => {
+                if (isDragging) {
+                    iconMoved = true;
+                    drag(e);
+                }
+            }, {passive: false});
+
+            handle.addEventListener('mousedown', (e) => {
+                iconMoved = false;
+                startX = e.clientX;
+                startY = e.clientY;
+                dragStart(e);
+            });
+
+            window.addEventListener('mouseup', (e) => {
+                if (isDragging) {
+                    isDragging = false;
+                    if (Math.abs(e.clientX - startX) < 6 && Math.abs(e.clientY - startY) < 6) {
+                        if (onClick) onClick();
+                    }
+                }
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    iconMoved = true;
+                    drag(e);
+                }
+            });
 
             function dragStart(e) {
-                if (e.target.classList.contains('close-btn')) return;
                 isDragging = true;
                 let clientX = e.type === "touchstart" ? e.touches[0].clientX : e.clientX;
                 let clientY = e.type === "touchstart" ? e.touches[0].clientY : e.clientY;
 
                 initialX = clientX - element.offsetLeft;
                 initialY = clientY - element.offsetTop;
-            }
-
-            function dragEnd() {
-                isDragging = false;
             }
 
             function drag(e) {
@@ -301,9 +347,6 @@
                 let x = clientX - initialX;
                 let y = clientY - initialY;
 
-                let maxX = window.innerWidth - element.offsetWidth / 2;
-                let maxY = window.innerHeight - element.offsetHeight / 2;
-
                 element.style.left = x + "px";
                 element.style.top = y + "px";
                 element.style.transform = "none";
@@ -311,13 +354,52 @@
             }
         }
 
-        let clickTime = 0;
-        dragIcon.addEventListener('mousedown', () => clickTime = Date.now());
-        dragIcon.addEventListener('touchstart', () => clickTime = Date.now());
-        
-        dragIcon.addEventListener('mouseup', () => { if (Date.now() - clickTime < 200) toggleModal(); });
-        dragIcon.addEventListener('touchend', () => { if (Date.now() - clickTime < 200) toggleModal(); });
+        // ২. পপআপ উইন্ডো ড্র্যাগ হ্যান্ডলার
+        const popupHeader = document.getElementById('popupHeader');
+        makePopupDraggable(modal, popupHeader);
+
+        function makePopupDraggable(element, handle) {
+            let isDragging = false, initialX, initialY;
+
+            handle.addEventListener('touchstart', (e) => {
+                if (e.target.classList.contains('close-btn')) return;
+                isDragging = true;
+                let clientX = e.touches[0].clientX;
+                let clientY = e.touches[0].clientY;
+                initialX = clientX - element.offsetLeft;
+                initialY = clientY - element.offsetTop;
+            }, {passive: false});
+
+            window.addEventListener('touchend', () => isDragging = false);
+
+            window.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                e.preventDefault();
+                let clientX = e.touches[0].clientX;
+                let clientY = e.touches[0].clientY;
+                element.style.left = (clientX - initialX) + "px";
+                element.style.top = (clientY - initialY) + "px";
+                element.style.transform = "none";
+                element.style.position = 'fixed';
+            }, {passive: false});
+
+            handle.addEventListener('mousedown', (e) => {
+                if (e.target.classList.contains('close-btn')) return;
+                isDragging = true;
+                initialX = e.clientX - element.offsetLeft;
+                initialY = e.clientY - element.offsetTop;
+            });
+
+            window.addEventListener('mouseup', () => isDragging = false);
+
+            window.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                element.style.left = (e.clientX - initialX) + "px";
+                element.style.top = (e.clientY - initialY) + "px";
+                element.style.transform = "none";
+                element.style.position = 'fixed';
+            });
+        }
     </script>
 </body>
 </html>
-
