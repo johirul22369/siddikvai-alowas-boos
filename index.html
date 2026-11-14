@@ -207,7 +207,7 @@
             box-shadow: 0 0 8px rgba(56, 189, 248, 0.8);
         }
 
-        /* 🎯 গোল্ডেন ফ্রেমের ভেতরের কালো বক্সে পারফেক্ট সেন্টারে নামিয়ে আনা হলো */
+        /* 🎯 নতুন স্টাইলিশ পজিশনিং ও সেন্টারিং এরিয়া */
         .center-prediction-area {
             position: absolute;
             top: 225px;
@@ -270,13 +270,20 @@
             letter-spacing: 0.5px;
         }
 
+        /* ✨ নতুন এবং আকর্ষণীয় প্রিমিয়াম বিগ/স্মেল স্টাইল */
         .solid-big-small {
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 900;
-            color: #ffd700;
-            letter-spacing: 1px;
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.95), 0 0 6px rgba(255, 215, 0, 0.9);
+            background: linear-gradient(135deg, #fff200, #ff8800);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 12px rgba(255, 136, 0, 0.6);
+            letter-spacing: 1.5px;
             line-height: 1;
+            padding: 2px 8px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 6px;
+            background-color: rgba(0, 0, 0, 0.6);
         }
 
         .official-num-badge {
@@ -487,10 +494,10 @@
             <button class="settings-btn" onclick="toggleHistoryModalWindow()" title="Open History">⚙️</button>
             <button class="close-btn" onclick="hidePopup()">×</button>
 
-            <!-- ব্যাকগ্রাউন্ড ইমেজ -->
-            <img src="https://cdn.imageurlgenerator.com/uploads/9851b780-cca8-4010-ac62-7edf8a1d4578.png" alt="JoyTG VIP Popup" class="popup-main-bg-img">
+            <!-- ব্যাকগ্রাউন্ড ইমেজ (নতুন আপডেট করা ইমেজ ইউআরএল) -->
+            <img src="https://cdn.imageurlgenerator.com/uploads/4099244a-167b-4942-8f5a-2b2cd05b861d.png" alt="JoyTG VIP Popup" class="popup-main-bg-img">
 
-            <!-- গোল্ডেন ফ্রেমের ভেতরের কালো বক্সে পারফেক্ট সেন্টারে পজিশন করা পিরিয়ড ও সিগন্যাল এরিয়া -->
+            <!-- পারফেক্ট সেন্টারে পজিশন করা পিরিয়ড ও সিগন্যাল এরিয়া -->
             <div class="center-prediction-area">
                 <div class="period-container">
                     <div class="period-display" id="period-num" onclick="copyPeriodNumber()" title="Click to Copy Period">Loading...</div>
@@ -667,7 +674,7 @@
                 sizeEl.style.fontSize = "11.5px";
                 numEl.style.display = "none";
             } else {
-                sizeEl.style.fontSize = "17px";
+                sizeEl.style.fontSize = "16px";
                 sizeEl.innerText = cachedPrediction.type;
 
                 let luckyNum = cachedPrediction.num;
