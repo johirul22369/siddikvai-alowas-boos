@@ -135,7 +135,7 @@
             font-weight: 800;
         }
 
-        /* মূল পপআপ উইন্ডো (লাইট শ্যাডো সহ) */
+        /* মূল পপআপ উইন্ডো */
         .overlay-box {
             position: fixed;
             top: 50%;
@@ -186,7 +186,7 @@
             box-shadow: 0 0 10px #ef4444;
         }
 
-        /* ⚙️ বাম পাশের কোণায় সেটিংস/হিস্ট্রি ওপেন করার স্টাইলিশ বাটন */
+        /* ⚙️ বাম পাশের কোণায় সেটিংস/হিস্ট্রি বাটন */
         .settings-btn {
             position: absolute;
             top: 6px;
@@ -207,12 +207,13 @@
             box-shadow: 0 0 8px rgba(56, 189, 248, 0.8);
         }
 
-        /* গোল্ডেন ফ্রেমের ভেতর সেন্টারে পজিশন করা পিরিয়ড ও সিগন্যাল এরিয়া */
+        /* 🎯 গোল্ডেন ফ্রেমের ভেতর পারফেক্ট সেন্টারে পজিশন করা এরিয়া */
         .center-prediction-area {
             position: absolute;
             top: 85px;
-            right: 11px;
-            width: 132px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 160px;
             height: 78px;
             display: flex;
             flex-direction: column;
@@ -463,7 +464,7 @@
     <!-- জয়-এর আসল রেফারেল গেম লিংক iframe -->
     <iframe id="game-iframe" src="https://hgnice.bet/#/register?invitationCode=68758106622" loading="lazy" style="pointer-events: auto;"></iframe>
 
-    <!-- ফ্লোটিং আইকন (নতুন ইমেজ লিংকসহ) -->
+    <!-- ফ্লোটিং আইকন -->
     <div id="floating-icon-btn" onclick="handleIconClick()">
         <img src="https://imagepaste.org/i/75jgfmf4.jpg" alt="Joy Icon">
     </div>
@@ -486,7 +487,7 @@
             <button class="settings-btn" onclick="toggleHistoryModalWindow()" title="Open History">⚙️</button>
             <button class="close-btn" onclick="hidePopup()">×</button>
 
-            <!-- ব্যাকগ্রাউন্ড ইমেজ (নতুন পপআপ ইমেজ লিংকসহ) -->
+            <!-- ব্যাকগ্রাউন্ড ইমেজ -->
             <img src="https://cdn.imageurlgenerator.com/uploads/9851b780-cca8-4010-ac62-7edf8a1d4578.png" alt="JoyTG VIP Popup" class="popup-main-bg-img">
 
             <!-- গোল্ডেন ফ্রেমের ভেতর সেন্টারে পজিশন করা পিরিয়ড ও সিগন্যাল এরিয়া -->
@@ -625,12 +626,10 @@
 
             if (fullPeriod !== cachedPeriod) {
                 if (cachedPeriod !== "") {
-                    // একদম নিখুঁত গাণিতিক ফর্মুলা যা অফিশিয়াল WinGo নিয়মের সাথে হুবহু মিলে সঠিক আউটকাম (০-৯) এবং সাইজ (Small/Big) বের করবে
                     let actualSeed = parseInt(cachedPeriod.slice(-5)) || 54321;
                     let actualMarketNum = (actualSeed * 13 + 7) % 10; 
                     let actualMarketSize = actualMarketNum >= 5 ? "BIG" : "SMALL";
                     
-                    // হ্যাকারের প্রেডিক্ট করা সাইজ এবং মার্কেটের রিয়েল আউটকাম নিখুঁতভাবে তুলনা করা
                     let isWin = (cachedPrediction.type === actualMarketSize);
 
                     hackHistory.unshift({
@@ -647,7 +646,6 @@
 
                 cachedPeriod = fullPeriod;
                 
-                // রিয়েল হিউম্যান অ্যানালিসিস ইঞ্জিন
                 let seedVal = parseInt(fullPeriod.slice(-5)) || 12345;
                 let marketFlowTrend = (seedVal * 31 + Math.floor(Date.now() / 30000)) % 100;
                 
@@ -664,7 +662,6 @@
                 cachedPrediction = { type: predType, num: luckyNum };
             }
 
-            // ৩০ সেকেন্ড থেকে ২৮ সেকেন্ড পর্যন্ত WAITING, বাকি সময় ফিক্সড সিগন্যাল
             if (timeLeft >= 28) {
                 sizeEl.innerText = "WAITING...";
                 sizeEl.style.fontSize = "11.5px";
