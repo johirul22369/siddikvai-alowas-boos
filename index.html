@@ -207,19 +207,19 @@
             box-shadow: 0 0 8px rgba(56, 189, 248, 0.8);
         }
 
-        /* 🎯 গোল্ডেন ফ্রেমের ভেতর পারফেক্ট সেন্টারে পজিশন করা এরিয়া */
+        /* 🎯 গোল্ডেন ফ্রেমের ফাঁকা জায়গায় পারফেক্ট সেন্টারে নামিয়ে আনা হলো */
         .center-prediction-area {
             position: absolute;
-            top: 85px;
+            top: 160px;
             left: 50%;
             transform: translateX(-50%);
             width: 160px;
-            height: 78px;
+            height: 90px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 2px;
+            gap: 4px;
             z-index: 10;
         }
 
@@ -231,7 +231,7 @@
         }
 
         .period-display {
-            font-size: 7.5px;
+            font-size: 8px;
             font-weight: 900;
             color: #38bdf8;
             letter-spacing: 0.3px;
@@ -260,7 +260,7 @@
         }
 
         .timer-display {
-            font-size: 9px;
+            font-size: 9.5px;
             font-weight: 900;
             color: #facc15;
             background: rgba(0, 0, 0, 0.8);
@@ -271,7 +271,7 @@
         }
 
         .solid-big-small {
-            font-size: 16px;
+            font-size: 17px;
             font-weight: 900;
             color: #ffd700;
             letter-spacing: 1px;
@@ -280,13 +280,13 @@
         }
 
         .official-num-badge {
-            width: 18px;
-            height: 18px;
+            width: 19px;
+            height: 19px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 9.5px;
+            font-size: 10px;
             font-weight: 900;
             color: #ffffff;
             text-shadow: 1px 1px 2px #000;
@@ -490,7 +490,7 @@
             <!-- ব্যাকগ্রাউন্ড ইমেজ -->
             <img src="https://cdn.imageurlgenerator.com/uploads/9851b780-cca8-4010-ac62-7edf8a1d4578.png" alt="JoyTG VIP Popup" class="popup-main-bg-img">
 
-            <!-- গোল্ডেন ফ্রেমের ভেতর সেন্টারে পজিশন করা পিরিয়ড ও সিগন্যাল এরিয়া -->
+            <!-- গোল্ডেন ফ্রেমের ফাঁকা জায়গায় সেন্টারে পজিশন করা পিরিয়ড ও সিগন্যাল এরিয়া -->
             <div class="center-prediction-area">
                 <div class="period-container">
                     <div class="period-display" id="period-num" onclick="copyPeriodNumber()" title="Click to Copy Period">Loading...</div>
@@ -667,7 +667,7 @@
                 sizeEl.style.fontSize = "11.5px";
                 numEl.style.display = "none";
             } else {
-                sizeEl.style.fontSize = "16px";
+                sizeEl.style.fontSize = "17px";
                 sizeEl.innerText = cachedPrediction.type;
 
                 let luckyNum = cachedPrediction.num;
